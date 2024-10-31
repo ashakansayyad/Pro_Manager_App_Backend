@@ -2,7 +2,7 @@ const express = require("express");
 const authMiddleware = require("../middleware/authMiddleware");
 const router = express.Router();
 const Task = require("../model/taskModel");
-const moment = require("moment");
+const moment = require('moment-timezone');
 const User = require("../model/userModel");
 
 //create task
@@ -207,16 +207,16 @@ router.get("/filter/:dateFilter", authMiddleware, async (req, res) => {
 
   switch (dateFilter) {
     case "today":
-      startDate = moment().startOf("day").toDate();
-      endDate = moment().endOf("day").toDate();
+       startDate = moment().tz("Asia/Kolkata").startOf("day").toDate();
+       endDate = moment().tz("Asia/Kolkata").endOf("day").toDate();
       break;
     case "week":
-      startDate = moment().startOf("isoWeek").toDate(); // Start the week from (Monday)
-      endDate = moment().endOf("isoWeek").toDate(); // End the week (Sunday)
+      startDate =  moment().tz("Asia/Kolkata").startOf("isoWeek").toDate(); // Start the week from (Monday)
+      endDate =  moment().tz("Asia/Kolkata").endOf("isoWeek").toDate(); // End the week (Sunday)
       break;
     case "month":
-      startDate = moment().startOf("month").toDate();
-      endDate = moment().endOf("month").toDate();
+      startDate =  moment().tz("Asia/Kolkata").startOf("month").toDate();
+      endDate =  moment().tz("Asia/Kolkata").endOf("month").toDate();
       break;
     default:
       return res.status(400).json({ message: "Invalid date filter" });
